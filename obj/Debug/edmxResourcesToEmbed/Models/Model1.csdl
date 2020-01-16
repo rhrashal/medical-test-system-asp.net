@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicalTestDB1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorID" />
+    </Key>
+    <Property Name="DoctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DoctorName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__DoctorI__3A81B327" FromRole="Doctor" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Particular">
+    <Key>
+      <PropertyRef Name="ParticularID" />
+    </Key>
+    <Property Name="ParticularID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParticularName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ImageUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Services" Relationship="Self.FK__Service__Particu__412EB0B6" FromRole="Particular" ToRole="Service" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="DoctorID" Type="Int32" />
+    <Property Name="MobileNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__DoctorI__3A81B327" FromRole="Patient" ToRole="Doctor" />
+    <NavigationProperty Name="Services" Relationship="Self.FK__Service__Patient__403A8C7D" FromRole="Patient" ToRole="Service" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="ParticularID" />
+    </Key>
+    <Property Name="PatientID" Type="Int32" Nullable="false" />
+    <Property Name="ParticularID" Type="Int32" Nullable="false" />
+    <Property Name="Quntity" Type="Int32" />
+    <NavigationProperty Name="Particular" Relationship="Self.FK__Service__Particu__412EB0B6" FromRole="Service" ToRole="Particular" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Service__Patient__403A8C7D" FromRole="Service" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK__Patient__DoctorI__3A81B327">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="DoctorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service__Particu__412EB0B6">
+    <End Role="Particular" Type="Self.Particular" Multiplicity="1" />
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Particular">
+        <PropertyRef Name="ParticularID" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="ParticularID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service__Patient__403A8C7D">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientID" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="PatientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MedicalTestDB1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="Particulars" EntityType="Self.Particular" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="Services" EntityType="Self.Service" />
+    <AssociationSet Name="FK__Patient__DoctorI__3A81B327" Association="Self.FK__Patient__DoctorI__3A81B327">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service__Particu__412EB0B6" Association="Self.FK__Service__Particu__412EB0B6">
+      <End Role="Particular" EntitySet="Particulars" />
+      <End Role="Service" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service__Patient__403A8C7D" Association="Self.FK__Service__Patient__403A8C7D">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Service" EntitySet="Services" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

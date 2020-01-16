@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MedicalTestDB1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorName" Type="varchar" MaxLength="60" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Mobile" Type="varchar" MaxLength="11" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Particular">
+          <Key>
+            <PropertyRef Name="ParticularID" />
+          </Key>
+          <Property Name="ParticularID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticularName" Type="varchar" MaxLength="200" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="150" />
+          <Property Name="Rate" Type="money" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientName" Type="varchar" MaxLength="60" />
+          <Property Name="Age" Type="int" />
+          <Property Name="DoctorID" Type="int" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="ParticularID" />
+          </Key>
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="ParticularID" Type="int" Nullable="false" />
+          <Property Name="Quntity" Type="int" />
+        </EntityType>
+        <Association Name="FK__Patient__DoctorI__3A81B327">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Particu__412EB0B6">
+          <End Role="Particular" Type="Self.Particular" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Particular">
+              <PropertyRef Name="ParticularID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ParticularID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Patient__403A8C7D">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicalTestDB1ModelStoreContainer">
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Particular" EntityType="Self.Particular" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Patient__DoctorI__3A81B327" Association="Self.FK__Patient__DoctorI__3A81B327">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Particu__412EB0B6" Association="Self.FK__Service__Particu__412EB0B6">
+            <End Role="Particular" EntitySet="Particular" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Patient__403A8C7D" Association="Self.FK__Service__Patient__403A8C7D">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MedicalTestDB1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__DoctorI__3A81B327" FromRole="Doctor" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Particular">
+          <Key>
+            <PropertyRef Name="ParticularID" />
+          </Key>
+          <Property Name="ParticularID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticularName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Services" Relationship="Self.FK__Service__Particu__412EB0B6" FromRole="Particular" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="MobileNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__DoctorI__3A81B327" FromRole="Patient" ToRole="Doctor" />
+          <NavigationProperty Name="Services" Relationship="Self.FK__Service__Patient__403A8C7D" FromRole="Patient" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="ParticularID" />
+          </Key>
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="ParticularID" Type="Int32" Nullable="false" />
+          <Property Name="Quntity" Type="Int32" />
+          <NavigationProperty Name="Particular" Relationship="Self.FK__Service__Particu__412EB0B6" FromRole="Service" ToRole="Particular" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__Service__Patient__403A8C7D" FromRole="Service" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK__Patient__DoctorI__3A81B327">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Particu__412EB0B6">
+          <End Role="Particular" Type="Self.Particular" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Particular">
+              <PropertyRef Name="ParticularID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ParticularID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Patient__403A8C7D">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicalTestDB1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Particulars" EntityType="Self.Particular" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <AssociationSet Name="FK__Patient__DoctorI__3A81B327" Association="Self.FK__Patient__DoctorI__3A81B327">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Particu__412EB0B6" Association="Self.FK__Service__Particu__412EB0B6">
+            <End Role="Particular" EntitySet="Particulars" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Patient__403A8C7D" Association="Self.FK__Service__Patient__403A8C7D">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MedicalTestDB1ModelStoreContainer" CdmEntityContainer="MedicalTestDB1Entities">
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="MedicalTestDB1Model.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Particulars">
+            <EntityTypeMapping TypeName="MedicalTestDB1Model.Particular">
+              <MappingFragment StoreEntitySet="Particular">
+                <ScalarProperty Name="ParticularID" ColumnName="ParticularID" />
+                <ScalarProperty Name="ParticularName" ColumnName="ParticularName" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="MedicalTestDB1Model.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="MedicalTestDB1Model.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ParticularID" ColumnName="ParticularID" />
+                <ScalarProperty Name="Quntity" ColumnName="Quntity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

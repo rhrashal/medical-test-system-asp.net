@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicalTestDB1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorID" />
+    </Key>
+    <Property Name="DoctorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorName" Type="varchar" MaxLength="60" />
+    <Property Name="Email" Type="varchar" MaxLength="200" />
+    <Property Name="Mobile" Type="varchar" MaxLength="11" />
+    <Property Name="DepartmentName" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="Particular">
+    <Key>
+      <PropertyRef Name="ParticularID" />
+    </Key>
+    <Property Name="ParticularID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParticularName" Type="varchar" MaxLength="200" />
+    <Property Name="ImageUrl" Type="varchar" MaxLength="150" />
+    <Property Name="Rate" Type="money" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientName" Type="varchar" MaxLength="60" />
+    <Property Name="Age" Type="int" />
+    <Property Name="DoctorID" Type="int" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="ParticularID" />
+    </Key>
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="ParticularID" Type="int" Nullable="false" />
+    <Property Name="Quntity" Type="int" />
+  </EntityType>
+  <Association Name="FK__Patient__DoctorI__3A81B327">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="DoctorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service__Particu__412EB0B6">
+    <End Role="Particular" Type="Self.Particular" Multiplicity="1" />
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Particular">
+        <PropertyRef Name="ParticularID" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="ParticularID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service__Patient__403A8C7D">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientID" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="PatientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MedicalTestDB1ModelStoreContainer">
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Particular" EntityType="Self.Particular" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Patient__DoctorI__3A81B327" Association="Self.FK__Patient__DoctorI__3A81B327">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service__Particu__412EB0B6" Association="Self.FK__Service__Particu__412EB0B6">
+      <End Role="Particular" EntitySet="Particular" />
+      <End Role="Service" EntitySet="Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service__Patient__403A8C7D" Association="Self.FK__Service__Patient__403A8C7D">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Service" EntitySet="Service" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="PatientInfo">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="PatientID" type="xs:int" minOccurs="0" />
+                <xs:element name="PatientName" type="xs:string" minOccurs="0" />
+                <xs:element name="Age" type="xs:int" minOccurs="0" />
+                <xs:element name="MobileNumber" type="xs:string" minOccurs="0" />
+                <xs:element name="DoctorName" type="xs:string" minOccurs="0" />
+                <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+                <xs:element name="ParticularName" type="xs:string" minOccurs="0" />
+                <xs:element name="Rate" type="xs:decimal" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <PatientInfo>
+    <PatientID>7</PatientID>
+    <PatientName>Benjir Akter</PatientName>
+    <Age>30</Age>
+    <MobileNumber>01721454537</MobileNumber>
+    <DoctorName>kepayet Hossain</DoctorName>
+    <DepartmentName>Radiology</DepartmentName>
+    <ParticularName>Prostate Specific Antigen (PSA Test)</ParticularName>
+    <Rate>1350.0000</Rate>
+  </PatientInfo>
+  <PatientInfo>
+    <PatientID>7</PatientID>
+    <PatientName>Benjir Akter</PatientName>
+    <Age>30</Age>
+    <MobileNumber>01721454537</MobileNumber>
+    <DoctorName>kepayet Hossain</DoctorName>
+    <DepartmentName>Radiology</DepartmentName>
+    <ParticularName>Prothrombin Time (PT)</ParticularName>
+    <Rate>300.0000</Rate>
+  </PatientInfo>
+</NewDataSet>
